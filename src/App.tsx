@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react';
+import './App.scss';
+import Header from "./components/header/header";
+import {useActions} from "./hooks/useActions";
+import {Board} from "./models/board";
+import BoardComponent from "./components/content/board";
+import {useTypedSelector} from "./hooks/useTypeSelector";
+import HoverComponent from "./components/hover/hoverComponent";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App: React.FC = () => {
+    const {fetchBox} = useActions()
+    const [board, setBoard] = useState(new Board())
+    const {value} = useTypedSelector(state => state.box)
+    useEffect(() => {
+        fetchBox()
+        restart()
+    }, [value])
+
+    function restart() {
+        const newBoard = new Board()
+        newBoard.initCells(value.field as number)
+        setBoard(newBoard)
+    }
+
+    return (
+        <div className="App">
+            <div className="content">
+                <Header/>
+                <BoardComponent board={board} setBoard={setBoard}/>
+            </div>
+            <div className="hover">
+                <HoverComponent/>
+            </div>
+        </div>
+    );
 }
 
 export default App;

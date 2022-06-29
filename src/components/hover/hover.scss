@@ -1,0 +1,16 @@
+.HoverComponent{
+  .header{
+    font-size: 25px;
+    font-weight: bold;
+  }
+  .hoverBlock{
+    .hover{
+      background: #fbf8e3;
+      padding: 10px 0 10px 5px;
+      border-radius: 10px;
+      color: #8f7443;
+      margin-bottom: 7px;
+      border: 1px solid #fbe0b6;
+    }
+  }
+}
